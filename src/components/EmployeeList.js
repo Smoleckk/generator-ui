@@ -37,42 +37,54 @@ const EmployeeList = () => {
     }
 
 
+
     return (
-        <div className="container mx-6 my-8">
+        <div className=" mx-6 my-8">
             <div className="h-12">
                 <button
                     onClick={() => navigate("/addEmployee")}
                     className='rounded bg-slate-600 text-white px-6 py-2 font-semibold'>
-                    Add Employee
+                    Add Invoice
                 </button>
+                {/* <button
+                    onClick={() => navigate("/addProduct")}
+                    className='rounded bg-slate-600 text-white px-6 py-2 font-semibold'>
+                    Add Product
+                </button> */}
+
             </div>
-            <div className="flex shadow border-b"></div>
-            <table className='min-w-full'>
-                <thead className='bg-gray-50'>
-                    <tr>
-                        <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
-                            First Name
-                        </th>
-                        <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
-                            Last Name
-                        </th>
-                        <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
-                            Email ID
-                        </th>
-                        <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
-                            Actions
-                        </th>
-                    </tr>
-                </thead>
-                {!loading && (
-                    <tbody className='bg-white'>
-                        {employees.map((employee) => (
-                            <Employee employee={employee} deleteEmployee={deleteEmployee} key={employee.id}></Employee>
-                        ))}
-                    </tbody>
-                )}
-            </table>
-        </div>
+            <div className="flex justify-center">
+                <table className='w-3/5'>
+                 
+                    <thead className='bg-gray-50'>
+                        <tr>
+                            <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
+                                Sender
+                            </th>
+                            <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
+                                Recipient
+                            </th>
+                            <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
+                                Invoice number
+                            </th>
+                            <th className='text-left font-medium text-gray-500 uppercase tracking-wider py-3 px-6'>
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    {!loading && (
+                        <tbody>
+                            {/* flex flex-wrap */}
+                            {employees.map((employee) => (
+                                <Employee employee={employee}
+                                    deleteEmployee={deleteEmployee}
+                                    key={employee.id}>
+                                </Employee>
+                            ))}
+                        </tbody>
+                    )}
+                </table>
+            </div></div>
     )
 }
 

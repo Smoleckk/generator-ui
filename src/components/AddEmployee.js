@@ -1,28 +1,72 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
 //import { useNavigate } from "react-router-dom";
 import EmployeeService from '../services/EmployeeService';
+import { PDFExport, savePDF } from '@progress/kendo-react-pdf'
+import Company from './comp/Company';
+import Label from './comp/Label';
+import Invoice from './comp/Invoice';
+import LabelRow from './comp/LabelRow';
+import Summary from './comp/Summary';
+import Buttons from './comp/Buttons';
+import AddRow from './comp/AddRow';
+import logo from "./rocket.jpg"
 
 const AddEmployee = () => {
 
-    // const [users, setUsers] = useState([
-    //     {
-    //         id: "",
-    //         name: "Joe",
-    //     }
-    // ]);
+    const [product, setProduct] = useState("")
+    const [amount, setAmount] = useState(1)
+    const [price, setPrice] = useState(0)
+    const [sum, setSum] = useState(0)
+    const [finalPrice, setfinalPrice] = useState(0)
 
-    const [car, setCar] = useState("")
+    const [vat, setVat] = useState(20)
+    const [rabat, setRabat] = useState(0)
+    const [number, setNumber] = useState('#')
+    const [discount, setDiscount] = useState(true)
+
 
     const [employee, setEmployee] = useState({
         id: "",
         firstName: "",
         lastName: "",
         emailId: "",
+        issueData: "",
+        payDate: "",
+        vat: "",
+        rabat: "",
+        finalPrice: "",
+        image:"",
         salaries: []
-        //{ name: "", car: "" }
+
     })
 
+    const [loading, setLoading] = useState(true)
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setLoading(true);
+            try {
+                const response = await EmployeeService.getProducts();
+                setProducts(response.data)
+                console.log(response.data)
+            } catch (error) {
+                console.log(error);
+            }
+            setLoading(false);
+        };
+        fetchData();
+    }, [])
+
+    useEffect(() => {
+        setSum(price * amount)
+    }, [price, amount]);
+
+    useEffect(() => {
+        setEmployee({ ...employee, finalPrice: finalPrice });
+    }, [finalPrice]);
+    
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -30,23 +74,33 @@ const AddEmployee = () => {
         setEmployee({ ...employee, [e.target.name]: value });
         // setEmployee({ ...employee, users:users})
     }
-    //const navigaye = useNavigate();
 
     const saveEmployee = (e) => {
-        e.preventDefault();
-        setEmployee({ ...employee, salaries: [...employee.salaries, { id: "", salary: car }] });
+        //e.preventDefault();
+        console.log("vat" + vat + "rabat" + rabat)
+        setEmployee({
+            ...employee, salaries: [...employee.salaries, { id: "", salary: product, amount: amount, price: price, sum: sum }],
+
+        });
         EmployeeService.saveEmployee(employee).then((response) => {
             console.log(response);
             navigate("/employeeList")
-            //  navigaye("/employeeList");
+
         }).catch((error) => {
             console.log(error);
         });
 
     };
-    const onClick2 = (e) => {
-        setEmployee({ ...employee, salaries: [...employee.salaries, { id: Math.random(), salary: car }] });
+    const addSalary = () => {
+        setEmployee({ ...employee, salaries: [...employee.salaries, { id: Math.random(), salary: product, amount: amount, price: price, sum: sum }] });
+        setfinalPrice(prevState => prevState + parseInt(sum))
+        setProduct("")
+        setPrice(0)
+        setAmount(1)
+        setSum(price * amount)
+
     };
+
 
     const reset = (e) => {
         e.preventDefault();
@@ -56,17 +110,37 @@ const AddEmployee = () => {
             firstName: "",
             lastName: "",
             emailId: "",
+            issueData: "",
+            payDate: "",
+            vat: "",
+            rabat: "",
+            finalPrice: "",
             salaries: []
         })
-        setCar("")
+        setProduct("")
+        setPrice("")
+        setAmount("")
+        setSum("")
     }
-
+    const disc = (e) => {
+        setEmployee({
+            ...employee, rabat: ""
+        })
+        setDiscount(!discount)
+    }
 
     const deleteSalary = (e, salarId) => {
         if (employee) {
             console.log(salarId + "   ")
             console.log(employee)
-            console.log(employee.salaries.salary)
+
+            employee.salaries.map((employ) => {
+                if (employ.id === salarId) {
+                    console.log("emplou->>" + finalPrice)
+                    setfinalPrice(finalPrice - parseInt(employ.sum))
+                }
+            }
+            )
             var filtered = employee.salaries.filter(function (value, index, arr) {
                 console.log(value.id + " -> " + salarId)
                 return value.id != salarId;
@@ -76,103 +150,131 @@ const AddEmployee = () => {
 
     }
 
+    const pdfExportComponent = useRef(null);
+
+    const handleExportWithComponent = (event) => {
+        pdfExportComponent.current.save();
+    }
+
+    const onItemSelect = (item) => {
+        // setEmployee({ ...employee, firstName: item.name });
+        setProduct(item.name)
+        setPrice(item.amount)
+    }
+    const hiddenFileInput = useRef(null);
     return (
 
-        <div className='flex max-w-2xl mx-auto shadow border-b'>
-            <div className="px-8 py-8">
-                <div className="font-thasdin text-2xl tracking-wider">
-                    <h1>Add New Employee</h1>
-                </div>
-                <div className="item-center justify-center h-14 w-full my-4">
-                    <label className='block text-gray-600 text-small font-normal'>
-                        First Name
-                    </label>
-                    <input
-                        type="text"
-                        name='firstName'
-                        value={employee.firstName}
-                        onChange={(e) => handleChange(e)}
-                        className='h-10 w-96 border mt-2 px-2 py-2'
-                    />
-                </div>
-                <div className="item-center justify-center h-14 w-full my-4">
-                    <label className='block text-gray-600 text-small font-normal'>
-                        Last Name
-                    </label>
-                    <input
-                        type="text"
-                        name='lastName'
-                        value={employee.lastName}
-                        onChange={(e) => handleChange(e)}
-                        className='h-10 w-96 border mt-2 px-2 py-2'
-                    />
-                </div>
-                <div className="item-center justify-center h-14 w-full my-4">
-                    <label className='block text-gray-600 text-small font-normal'>
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        name='emailId'
-                        value={employee.emailId}
-                        onChange={(e) => handleChange(e)}
-                        className='h-10 w-96 border mt-2 px-2 py-2'
-                    />
-                </div>
+        <div className='flex flex-wrap-reverse justify-center'>
 
-                <input type="button" onClick={onClick2} value="Add Salary"
-                    className='rounded text-white font-semibold bg-yellow-400 hover:bg-yellow-700 py-2 px-6' />
 
-                <div className="item-center justify-center h-14 w-full my-4">
-                    <label className='block text-gray-600 text-small font-normal'>
-                        Salary
-                    </label>
-                    <input
-                        type="text"
-                        name='name'
-                        value={car}
-                        onChange={(e) => setCar(e.target.value)}
-                        className='h-10 w-96 border mt-2 px-2 py-2'
-                    />
-                </div>
-                <div className="">
-                    {(
-                        <div className="">
-                            {employee.salaries.map((salar) => (
-                                <div>
-                                    {salar.salary}
-                                    {salar.id}
+            {/* margin={{ top: 20, left: 100, right: 30, bottom: 40 }}  ref={contentArea}  */}
+            <div className="py-8 col-start-2 col-end-4">
+                <PDFExport ref={pdfExportComponent} paperSize="A4"  >
+                    <div className="pdf-page size-a4"  >
 
-                                    <a
-                                        onClick={(e, id) => deleteSalary(e, salar.id)}
-                                        //console.log(employee.id)
-                                        className='text-indigo-600 hover:text-indigo-800 px-4 hover:cursor-pointer'>
-                                        Delete
-                                    </a>
-                                </div>
 
-                            ))}
+                        <Company
+                            handleChange={handleChange}
+                            employee={employee}
+                            logo={logo}
+                            number={number}
+                            setNumber={setNumber}
+                        // products={products}
+                        />
+
+
+                        <Label />
+
+                        <LabelRow deleteSalary={deleteSalary} employee={employee} />
+
+                        <Summary discount={discount} handleChange={handleChange} employee={employee} finalPrice={finalPrice} rabat={rabat} vat={vat} setRabat={setRabat} setVat={setVat} />
+                        {/* handleChange={handleChange} employee={employee}  */}
+                        <div className="grid grid-cols-9 mt-32">
+                            <div class="col-start-5 col-end-9 border-t-2">
+                                <label className='px-2  '>
+                                    Podpis i pieczatka
+                                </label>
+                            </div>
                         </div>
-                    )}
-                </div>
+                    </div>
+                </PDFExport>
 
-
-
-                <div className="item-center justify-center h-14 w-full my-4 space-x-4 pt-4">
-                    <button
-                        onClick={saveEmployee}
-                        className='rounded text-white font-semibold bg-green-400 hover:bg-green-700 py-2 px-6'>
-                        Save
-                    </button>
-                    <button
-                        onClick={reset}
-                        className='rounded text-white font-semibold bg-red-400 hover:bg-red-700 py-2 px-6'>
-                        Clear
-                    </button>
-                </div>
             </div>
+
+            <div className="py-8 px-10 col-start-5 col-end-7  ">
+
+
+                <div >
+                    <input type="text" />
+                    <select class="form-select appearance-none
+      block
+   
+      px-3
+      py-1.5
+      text-base
+      font-normal
+      text-gray-700
+      bg-white bg-clip-padding bg-no-repeat
+      border border-solid border-gray-300
+      rounded
+      transition
+      ease-in-out
+      m-0
+      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
+
+                        {products.map(item => (
+                            <option
+                                onClick={() => onItemSelect(item)}
+                            >
+                                {item.name}
+                            </option>
+                        ))}
+
+                    </select>
+
+                </div>
+                <input
+                    name='image'
+                    type="file"
+                    ref={hiddenFileInput}
+                    accept="image/*"
+                    onChange={(e) => handleChange(e)}
+                />
+                {/* <textarea
+                            type="text"
+                            name='firstName'
+                            placeholder='Dane odbiorcy'
+                            value={employee.firstName}
+                            onChange={(e) => handleChange(e)}
+                            className='h-28 w-full   overflow-hidden resize-none'
+                        /> */}
+
+                <Label />
+
+                <AddRow disc={disc} product={product} amount={amount} price={price} sum={sum}
+                    setProduct={setProduct} setAmount={setAmount} setPrice={setPrice} addSalary={addSalary}
+                    products={products}
+                />
+                <Buttons saveEmployee={saveEmployee} reset={reset} handleExportWithComponent={handleExportWithComponent} />
+            </div>
+
         </div>
+
     )
 }
 
 export default AddEmployee
+
+
+{/* <div className="item-center justify-center h-14 w-full my-4">
+                        <label className='block text-gray-600 text-small font-normal'>
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            name='emailId'
+                            value={employee.emailId}
+                            onChange={(e) => handleChange(e)}
+                            className='h-10 w-96 border mt-2 px-2 py-2'
+                        />
+                    </div> */}
