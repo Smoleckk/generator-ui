@@ -1,4 +1,4 @@
-<h3>Serwis polega na generowaniu, przechowywaniu i zarządzaniu fakturami oraz małym magazynem </h3>.<br>
+<h3>Serwis polega na generowaniu, przechowywaniu i zarządzaniu fakturami oraz małym magazynem.</h3><br>
 Założeniem było stworzenie projektu który ułatwi fakturowanie.
 
 Wykorzystane technologie:
@@ -18,6 +18,7 @@ następnie zatwierdzając klikając 'Save'.<br>
 <br>
 Produkty dodajemy pojedynczo, zostajemy przeniesieni do widoku dodania produktu i zatwierdzajac zostaje on zapisany w bazie danych.<br>
 <br>
+
 ![2022-05-09 21_31_42-](https://user-images.githubusercontent.com/73690548/167483828-f4cd19a6-ad61-448b-b20f-872060aecc90.png)
 
 <br>
