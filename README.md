@@ -2,7 +2,7 @@ Serwis polega na generowaniu i przechowywaniu faktur.<br>
 Założeniem było stworzenie projektu który ułatwi fakturowanie.
 
 Wykorzystane technologie:
--Spring boot
+<li>Spring boot</li>
 -React
 -MSSQL
 
