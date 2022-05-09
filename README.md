@@ -1,4 +1,4 @@
-Serwis polega na generowaniu i przechowywaniu faktur.
+Serwis polega na generowaniu i przechowywaniu faktur.<br>
 Założeniem było stworzenie projektu który ułatwi fakturowanie.
 
 Wykorzystane technologie:
