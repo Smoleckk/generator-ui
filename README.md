@@ -5,11 +5,13 @@ Wykorzystane technologie:
 <li>Spring boot</li>
 <li>React</li>
 <li>MSSQL</li>
+<br>
 Aplikacja umożliwia przechowywanie informacji o fakturach, a także aktualnym stanie produktów na magazynie.<br>
 <br>
 Produkty w magazynie zawierają informajce o kodzie, nazwie i cenie. Każdy wiersz możemy usunąć lub edytować. <br>
 Edytowanie odbywa się bezpośrednio w widoku wyświetlania produktów, najeżdzając na opcje 'Edit' dokonujemy zmian <br>
 następnie zatwierdzając klikając 'Save'.<br>
+
 ![2022-05-09 21_32_07-](https://user-images.githubusercontent.com/73690548/167483918-70c3b4f2-6d83-4365-a61b-3f0ac2e1eafa.png)
 
 
