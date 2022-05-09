@@ -1,4 +1,4 @@
-<h1>Serwis polega na generowaniu, przechowywaniu i zarządzaniu fakturami oraz małym magazynem </h1>.<br>
+<h3>Serwis polega na generowaniu, przechowywaniu i zarządzaniu fakturami oraz małym magazynem </h3>.<br>
 Założeniem było stworzenie projektu który ułatwi fakturowanie.
 
 Wykorzystane technologie:
