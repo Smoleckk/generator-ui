@@ -1,31 +1,12 @@
 import React from 'react'
 import Invoice from './Invoice'
 
-const Company = ({ products, handleChange, employee, logo, number, setNumber }) => {
-
-    const onItemSelect = (item) => {
-        console.log(item.name)
-    }
-
-
+const Company = ({handleChange, employee, logo, number, setNumber }) => {
     return (
         <div className="grid grid-cols-2">
             <div className="col-start-0 col-end-2 ">
                 <div className="grid grid-cols-3 ">
                     <div class="col-start-1 col-end-3 ">
-
-                        {/* <select className="">
-                            <option>Filter by genres...</option>
-                            {products.map(item => (
-                                <option
-                                onClick={() => onItemSelect(item)}
-                                >
-                                    {item.name}
-                                </option>
-                            ))}
-                      
-                        </select> */}
-
                         <textarea
                             type="text"
                             name='firstName'
@@ -34,7 +15,6 @@ const Company = ({ products, handleChange, employee, logo, number, setNumber }) 
                             onChange={(e) => handleChange(e)}
                             className='h-28 w-full   overflow-hidden resize-none'
                         />
-                        
                     </div>
 
                     <div class="col-start-1 col-end-3 mt-4">
@@ -76,8 +56,6 @@ const Company = ({ products, handleChange, employee, logo, number, setNumber }) 
                             placeholder='InvoiceNumber'
                             value={employee.emailId}
                             onChange={(e) => handleChange(e)}
-                            // value={number}
-                            // onChange={(e) => setNumber(e.target.value)}
                             className='w-full px-2 ' />
                     </div>
 
@@ -87,8 +65,6 @@ const Company = ({ products, handleChange, employee, logo, number, setNumber }) 
                         </label>
                     </div>
                     <div class="col-start-3 col-end-5 ">
-                        {/* <input type="date"
-                            className='w-full px-2 ' /> */}
                         <input type="date"
                             name='issueData'
                             placeholder='issueData'

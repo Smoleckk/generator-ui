@@ -1,29 +1,14 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
 import logo from "./w2.png"
 
 const Navbar = () => {
-  const navigate = useNavigate();
+
   return (
-    // <div className="bg-gray-800 flex ">
-    //   <div className="h-16 px-8 flex items-center">
-    //     <p className='text-white font-bold'>Employee Management System</p>
-    //   </div>
-    //   <button
-    //     onClick={() => navigate("/employeeList")}
-    //     className="rounded bg-slate-600 text-white px-6 py-2 font-semibold">
-    //     Employee List
-    //   </button>
-    //   <button
-    //     onClick={() => navigate("/productList")}
-    //     className="rounded bg-slate-600 text-white px-6 py-2 font-semibold">
-    //     Product List
-    //   </button>
-    // </div>
+
     <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
       <div class="container flex flex-wrap justify-between items-center mx-auto">
         <a href="/employeeList" class="flex items-center">
-          <img src={logo} alt="logo" className="mr-3 h-6 sm:h-9"  />
+          <img src={logo} alt="logo" className="mr-3 h-6 sm:h-9" />
           <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">BeSmart</span>
         </a>
         <div class="flex md:order-2">
@@ -42,12 +27,7 @@ const Navbar = () => {
             <li>
               <a href="/productList" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Product List</a>
             </li>
-            <li>
-              <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Services</a>
-            </li>
-            <li>
-              <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Contact</a>
-            </li>
+          
           </ul>
         </div>
       </div>

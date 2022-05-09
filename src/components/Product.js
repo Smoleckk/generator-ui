@@ -4,8 +4,6 @@ import EmployeeService from '../services/EmployeeService';
 
 const Product = ({ product, deleteProduct }) => {
 
-    const [amount, setAmount] = useState(0)
-
     const [product2, setProduct2] = useState({
         id: "",
         url: "",
@@ -15,12 +13,10 @@ const Product = ({ product, deleteProduct }) => {
 
     const [backColor, setBackColor] = useState(false)
 
-    const navigate = useNavigate();
 
     const handleChange = (e) => {
         const value = e.target.value;
         setProduct2({ ...product2, [e.target.name]: value });
-        // setEmployee({ ...employee, users:users})
     }
     useEffect(() => {
         const fetchData = async () => {
@@ -33,26 +29,10 @@ const Product = ({ product, deleteProduct }) => {
         };
         fetchData();
     }, []);
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             const response = await EmployeeService.getProductById(product.id);
-    //             setProduct2(response.data);
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     };
-    //     fetchData();
-    // }, [product2]);
-    // useEffect(() => {
-    //    // setEmployee({ ...employee, finalPrice: finalPrice });
-    //     setProduct2({...product2, })
-    // }, [finalPrice]);
 
     const updateProduct = (prod, id) => {
         EmployeeService.updateProduct(prod, id)
             .then((response) => {
-               // window.location.reload(false);
                 setEdit(true)
             })
             .catch((error) => {
@@ -68,7 +48,6 @@ const Product = ({ product, deleteProduct }) => {
 
             {!edit && (
                 <td className='text-left px-6 py-2 whitespace-nowrap'>
-                    {/* <div className="text-sm text-gray-500" >{product.url}</div> */}
                     <input type="text"
                         name='url'
                         placeholder='np. 1'
@@ -81,7 +60,6 @@ const Product = ({ product, deleteProduct }) => {
             )}
             {!edit && (
                 <td className='text-left px-6 py-2 whitespace-nowrap'>
-                    {/* <div className="text-sm text-gray-500">{product.name}</div> */}
                     <input type="text"
                         name='name'
                         placeholder='np. 1'
@@ -94,22 +72,18 @@ const Product = ({ product, deleteProduct }) => {
             )}
             {!edit && (
                 <td className='text-left px-6 py-2whitespace-nowrap'>
-                    {/* <div className="text-sm text-gray-500">{product.amount}</div> */}
-                    {/* {employee.salaries.map((salar) => (salar.salary))} */}
                     <input type="text"
                         name='amount'
                         placeholder='np. 1'
                         value={product2.amount}
                         onChange={(e) => handleChange(e)}
                         className='w-10 text-sm' />
-
                 </td>
             )}
 
             {edit && (
                 <td className='text-left px-6 py-2 whitespace-nowrap'>
                     <div className="text-sm " >{product2.url}</div>
-
                 </td>
 
 
@@ -117,7 +91,6 @@ const Product = ({ product, deleteProduct }) => {
             {edit && (
                 <td className='text-left px-6 py-2 whitespace-nowrap'>
                     <div className="text-sm ">{product2.name}</div>
-
                 </td>
 
 
@@ -125,9 +98,6 @@ const Product = ({ product, deleteProduct }) => {
             {edit && (
                 <td className='text-left px-6 py-2 whitespace-nowrap'>
                     <div className="text-sm ">{product2.amount}</div>
-                    {/* {employee.salaries.map((salar) => (salar.salary))} */}
-
-
                 </td>
             )}
 

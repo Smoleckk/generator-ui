@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom';
-//import { useNavigate } from "react-router-dom";
 import EmployeeService from '../services/EmployeeService';
-import { PDFExport, savePDF } from '@progress/kendo-react-pdf'
+import { PDFExport } from '@progress/kendo-react-pdf'
 import Company from './comp/Company';
 import Label from './comp/Label';
-import Invoice from './comp/Invoice';
 import LabelRow from './comp/LabelRow';
 import Summary from './comp/Summary';
 import Buttons from './comp/Buttons';
@@ -36,7 +34,7 @@ const AddEmployee = () => {
         vat: "",
         rabat: "",
         finalPrice: "",
-        image:"",
+        image: "",
         salaries: []
 
     })
@@ -66,17 +64,15 @@ const AddEmployee = () => {
     useEffect(() => {
         setEmployee({ ...employee, finalPrice: finalPrice });
     }, [finalPrice]);
-    
+
     const navigate = useNavigate();
 
     const handleChange = (e) => {
         const value = e.target.value;
         setEmployee({ ...employee, [e.target.name]: value });
-        // setEmployee({ ...employee, users:users})
     }
 
     const saveEmployee = (e) => {
-        //e.preventDefault();
         console.log("vat" + vat + "rabat" + rabat)
         setEmployee({
             ...employee, salaries: [...employee.salaries, { id: "", salary: product, amount: amount, price: price, sum: sum }],
@@ -157,7 +153,6 @@ const AddEmployee = () => {
     }
 
     const onItemSelect = (item) => {
-        // setEmployee({ ...employee, firstName: item.name });
         setProduct(item.name)
         setPrice(item.amount)
     }
@@ -165,9 +160,6 @@ const AddEmployee = () => {
     return (
 
         <div className='flex flex-wrap-reverse justify-center'>
-
-
-            {/* margin={{ top: 20, left: 100, right: 30, bottom: 40 }}  ref={contentArea}  */}
             <div className="py-8 col-start-2 col-end-4">
                 <PDFExport ref={pdfExportComponent} paperSize="A4"  >
                     <div className="pdf-page size-a4"  >
@@ -179,16 +171,13 @@ const AddEmployee = () => {
                             logo={logo}
                             number={number}
                             setNumber={setNumber}
-                        // products={products}
                         />
-
 
                         <Label />
 
                         <LabelRow deleteSalary={deleteSalary} employee={employee} />
 
                         <Summary discount={discount} handleChange={handleChange} employee={employee} finalPrice={finalPrice} rabat={rabat} vat={vat} setRabat={setRabat} setVat={setVat} />
-                        {/* handleChange={handleChange} employee={employee}  */}
                         <div className="grid grid-cols-9 mt-32">
                             <div class="col-start-5 col-end-9 border-t-2">
                                 <label className='px-2  '>
@@ -202,25 +191,11 @@ const AddEmployee = () => {
             </div>
 
             <div className="py-8 px-10 col-start-5 col-end-7  ">
-
-
                 <div >
                     <input type="text" />
-                    <select class="form-select appearance-none
-      block
-   
-      px-3
-      py-1.5
-      text-base
-      font-normal
-      text-gray-700
-      bg-white bg-clip-padding bg-no-repeat
-      border border-solid border-gray-300
-      rounded
-      transition
-      ease-in-out
-      m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
+                    <select class="form-select appearance-none block px-3 py-1.5 text-base font-normal text-gray-700 bg-white 
+                    bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0
+                    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
 
                         {products.map(item => (
                             <option
@@ -231,23 +206,7 @@ const AddEmployee = () => {
                         ))}
 
                     </select>
-
                 </div>
-                <input
-                    name='image'
-                    type="file"
-                    ref={hiddenFileInput}
-                    accept="image/*"
-                    onChange={(e) => handleChange(e)}
-                />
-                {/* <textarea
-                            type="text"
-                            name='firstName'
-                            placeholder='Dane odbiorcy'
-                            value={employee.firstName}
-                            onChange={(e) => handleChange(e)}
-                            className='h-28 w-full   overflow-hidden resize-none'
-                        /> */}
 
                 <Label />
 
@@ -264,17 +223,3 @@ const AddEmployee = () => {
 }
 
 export default AddEmployee
-
-
-{/* <div className="item-center justify-center h-14 w-full my-4">
-                        <label className='block text-gray-600 text-small font-normal'>
-                            Email
-                        </label>
-                        <input
-                            type="email"
-                            name='emailId'
-                            value={employee.emailId}
-                            onChange={(e) => handleChange(e)}
-                            className='h-10 w-96 border mt-2 px-2 py-2'
-                        />
-                    </div> */}

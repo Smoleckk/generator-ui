@@ -46,11 +46,6 @@ const EmployeeList = () => {
                     className='rounded bg-slate-600 text-white px-6 py-2 font-semibold'>
                     Add Invoice
                 </button>
-                {/* <button
-                    onClick={() => navigate("/addProduct")}
-                    className='rounded bg-slate-600 text-white px-6 py-2 font-semibold'>
-                    Add Product
-                </button> */}
 
             </div>
             <div className="flex justify-center">
@@ -74,7 +69,6 @@ const EmployeeList = () => {
                     </thead>
                     {!loading && (
                         <tbody>
-                            {/* flex flex-wrap */}
                             {employees.map((employee) => (
                                 <Employee employee={employee}
                                     deleteEmployee={deleteEmployee}

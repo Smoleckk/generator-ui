@@ -54,7 +54,6 @@ const Summary = ({ discount,employee, handleChange, finalPrice, rabat, vat, setR
                     placeholder='0%'
                     value={employee.vat}
                     onChange={(e) => handleChange(e)}
-                    // onChange={(e) => setVat(e.target.value)}
                     className=' w-12  overflow-hidden resize-none'
                 />
             </div>

@@ -37,7 +37,6 @@ const AddRow = ({ disc, product, amount, price, sum, setProduct, setAmount, setP
                     className='rounded text-white font-semibold bg-gray-400 hover:bg-gray-700 py-2 px-4' />
                 <button
                     onClick={() => disc()}
-                    //{setDiscount(!discount)}
                     className='mx-5 rounded text-white font-semibold bg-yellow-400 hover:bg-yellow-700 py-2 px-6'>
                     Discount
                 </button>

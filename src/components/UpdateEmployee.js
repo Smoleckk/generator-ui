@@ -55,19 +55,13 @@ const UpdateEmployee = () => {
         const fetchData = async () => {
             try {
                 const response = await EmployeeService.getEmployeeById(employee.id);
-                console.log("response")
-                console.log(response.data.finalPrice)
                 setEmployee(response.data);
                 setfinalPrice(response.data.finalPrice)
-                console.log(employee)
-                console.log("response--")
             } catch (error) {
                 console.log(error);
             }
         };
         fetchData();
-        //setfinalPrice(employee.finalPrice)
-        console.log("++++" + employee.firstName)
     }, []);
 
     const updateEmployee = (e) => {
@@ -89,32 +83,18 @@ const UpdateEmployee = () => {
 
 
     const deleteSalary = (e, salarId) => {
-        // e.preventDefault();
-        console.log(salarId)
         if (salarId > 1) {
-            console.log("here")
             EmployeeService.deleteSalary(salarId)
                 //EmployeeService.updateEmployee(employee, id)
                 .then((res) => {
                     if (employee) {
-                        console.log(salarId + "   ")
-                        //  employee.salaries.splice()
-                        console.log(employee)
-                        console.log(employee.salaries.salary)
                         var filtered = employee.salaries.filter(function (value, index, arr) {
-                            console.log(value.id + " -> " + salarId)
                             return value.id != salarId;
                         });
                         setEmployee({ ...employee, salaries: filtered });
 
-                        // setToggle(prevState => !prevState);
-
-                        console.log("--------")
-                        console.log(employee.salaries)
-                        console.log(filtered)
                         employee.salaries.map((employ) => {
                             if (employ.id === salarId) {
-                                console.log("emplou->>" + finalPrice)
                                 setfinalPrice(finalPrice - parseInt(employ.sum))
                             }
                         }
@@ -125,16 +105,11 @@ const UpdateEmployee = () => {
             if (employee) {
                 employee.salaries.map((employ) => {
                     if (employ.id === salarId) {
-                        console.log("emplou->>" + finalPrice)
                         setfinalPrice(finalPrice - parseInt(employ.sum))
                     }
                 }
                 )
-                console.log(salarId + "   ")
-                console.log(employee)
-                console.log(employee.salaries.salary)
                 var filtered = employee.salaries.filter(function (value, index, arr) {
-                    console.log(value.id + " -> " + salarId)
                     return value.id != salarId;
                 });
                 setEmployee({ ...employee, salaries: filtered });
@@ -149,23 +124,18 @@ const UpdateEmployee = () => {
         pdfExportComponent.current.save();
     }
     return (
-        <div className='flex flex-wrap-reverse justify-center  '>
+        <div className='flex flex-wrap-reverse justify-center'>
 
-
-            {/* margin={{ top: 20, left: 100, right: 30, bottom: 40 }}  ref={contentArea}  */}
             <div className="py-8 ">
                 <PDFExport ref={pdfExportComponent} paperSize="A4"  >
                     <div className="pdf-page size-a4"  >
 
-
-                        {/* <Company handleChange={handleChange} employee={employee} logo={logo} number={number} setNumber={setNumber} /> */}
                         <Company
                             handleChange={handleChange}
                             employee={employee}
                             logo={logo}
                             number={number}
                             setNumber={setNumber}
-                        // products={products}
                         />
 
                         <Label />
@@ -173,7 +143,6 @@ const UpdateEmployee = () => {
                         <LabelRow deleteSalary={deleteSalary} employee={employee} />
 
                         <Summary handleChange={handleChange} employee={employee} finalPrice={finalPrice} rabat={rabat} vat={vat} setRabat={setRabat} setVat={setVat} />
-                        {/*  */}
                         <div className="grid grid-cols-9 mt-32">
                             <div class="col-start-5 col-end-9 border-t-2">
                                 <label className='px-2  '>
@@ -183,10 +152,7 @@ const UpdateEmployee = () => {
                         </div>
                     </div>
                 </PDFExport>
-
             </div>
-
-
 
             <div className="py-8 px-10   ">
                 <div className="">
